@@ -1,0 +1,32 @@
+package com.juanespinosa.atlas.config;
+
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+// Configures Swagger/OpenAPI to recognize the API's JWT authentication.
+// Without this, springdoc still generates docs for the endpoints, but it
+// won't show the "Authorize" button or know that protected requests need
+// an "Authorization: Bearer <token>" header.
+@Configuration
+public class OpenApiConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        String schemeName = "bearerAuth";
+
+        return new OpenAPI()
+                .addSecurityItem(new SecurityRequirement().addList(schemeName))
+                .components(new Components()
+                        .addSecuritySchemes(schemeName, new SecurityScheme()
+                                .name(schemeName)
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer")
+                                .bearerFormat("JWT")
+                        )
+                );
+    }
+}

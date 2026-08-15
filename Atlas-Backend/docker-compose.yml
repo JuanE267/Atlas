@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: plataforma-db
+    environment:
+      POSTGRES_DB: plataforma
+      POSTGRES_USER: plataforma_user
+      POSTGRES_PASSWORD: plataforma_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - plataforma_pgdata:/var/lib/postgresql/data
+
+volumes:
+  plataforma_pgdata:
