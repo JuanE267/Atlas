@@ -1,0 +1,19 @@
+CREATE TABLE subject (
+    id BIGSERIAL PRIMARY KEY,
+    code VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE topic (
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT,
+    subject_id BIGINT NOT NULL REFERENCES subject(id)
+);
+
+CREATE TABLE app_user (
+    id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL
+);
